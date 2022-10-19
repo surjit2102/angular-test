@@ -1,0 +1,105 @@
+<p>user-list works!</p>
+
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+    <div class="dashboard-page">
+      <div class="title-bar">
+        <h2>Manage Users</h2>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="filter_sec">
+            <div class="filter_lft">
+
+              <mat-form-field class="srch" floatLabel="never">
+                <input matInput placeholder="Search Here....." />
+              </mat-form-field>
+
+            </div>
+            <!-- <div class="filter_ryt">
+              <button class="btn btn-primary" >
+                Add
+              </button>
+            </div> -->
+            
+            <mat-form-field appearance="standard">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            </mat-form-field>
+          </div>
+          <div class="tables">
+            <mat-table #table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Sr. No./ID
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i=index">
+                  {{currentPage*10-10+i+1}}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="employee_name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Name
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.employee_name }}
+                </mat-cell>
+              </ng-container>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="employee_salary">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Salary
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.employee_salary }}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="employee_age">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Age
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  {{ element.employee_age}}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef mat-sort-header
+                  >Action
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <button
+                    [routerLink]="'/edit/' + element._id"
+                    title="Edit"
+                    class="fa fa-pencil"
+                    aria-hidden="true"
+                  >Edit</button>
+                  <button
+                    class="fa fa-trash-o"
+                    title="Delete"
+                    aria-hidden="true"
+                    (click)="removeItem(element._id)"
+                  >Del</button>
+                  <button
+                    [routerLink]="'/view/'+element._id"
+                    title="View"
+                    class="fa fa-eye"
+                    aria-hidden="true"
+                  >View</button>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+              </tr>
+            </mat-table>
+            <mat-paginator [length]="recordsLength" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+              (page)="handlePage($event)"></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

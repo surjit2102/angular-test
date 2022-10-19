@@ -1,0 +1,77 @@
+<p>add-users works!</p>
+<div id="page-content-wrapper">
+  <div class="container-fluid">
+    <div class="dashboard-page">
+      <div class="title-bar">
+        <!-- <h2>{{ type? "Edit":"Add" }} Employees</h2> -->
+        <!-- <h2>Add Users</h2> -->
+        <h1 *ngIf="type">Add User</h1>
+        <h1 *ngIf="!type">Edit User</h1>
+      </div>
+      <div style="text-align: right">
+        <button class="btn btn-primary" routerLink="" style="margin-bottom: 20px">
+          Back
+        </button>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]=addEmployees (ngSubmit)="onSubmit()">
+            <div class="form_feilds lbl">
+              <div class="form_grup">
+                <mat-form-field appearance="fill">
+                  <label>ID</label>
+                  <input matInput type="number" placeholder="Id of employee" class="form_control" formControlName="id"
+                    restrictSpace trim()>
+                </mat-form-field>
+                <mat-error *ngIf="
+                        submitted &&
+                        addEmployees.controls['id'].hasError('required')
+                        ">ID is required.</mat-error>
+              </div>
+              <div class="form_grup">
+                <mat-form-field appearance="fill">
+                  <label>Employee's Name:</label>
+                  <input matInput type="text" placeholder="Name of the Employee" class="form_control"
+                    formControlName="employee_name" restrictSpace trim()>
+                </mat-form-field>
+                <mat-error *ngIf="
+                        submitted &&
+                        addEmployees.controls['employee_name'].hasError('required')
+                        ">Name is required.</mat-error>
+              </div>
+              <div class="form_grup">
+                <mat-form-field appearance="fill">
+                  <label>Employee's Salary:</label>
+                  <input matInput type="number" placeholder="Salary of the Employee" class="form_control"
+                    formControlName="employee_salary" restrictSpace trim()>
+                </mat-form-field>
+                <mat-error *ngIf="
+                        submitted &&
+                        addEmployees.controls['employee_salary'].hasError('required')
+                        ">Salary is required.</mat-error>
+              </div>
+              <div class="form_grup">
+                <mat-form-field appearance="fill">
+                  <label>Employee's Age:</label>
+                  <input matInput type="number" placeholder="Age of the Employee" class="form_control"
+                    formControlName="employee_age" restrictSpace trim()>
+                </mat-form-field>
+                <mat-error *ngIf="
+                        submitted &&
+                        addEmployees.controls['employee_age'].hasError('required')
+                        ">Age is required.</mat-error>
+              </div>
+
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
