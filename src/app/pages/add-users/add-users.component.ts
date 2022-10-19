@@ -25,16 +25,13 @@ export class AddUsersComponent implements OnInit {
   constructor( private route: ActivatedRoute, private fb: FormBuilder, private auth: AuthService, 
     private router: Router) {   
       
-        this.type = this.route.snapshot.paramMap.get('type');
-        if (this.type == 'edit') {
-          this.userId = this.route.snapshot.paramMap.get('id');
-          this.getEmployees();
-        }   
-        // this.seeker = this.route.snapshot.paramMap.get('type');
-        // if (this.seeker == 'edit' || this.seeker == 'view') {
-        //   this.userId = this.route.snapshot.paramMap.get('_id');
+        // this.type = this.route.snapshot.paramMap.get('type');
+        // if (this.type == 'edit') {
+        //   this.userId = this.route.snapshot.paramMap.get('id');
+        //   console.log(this.userId);
+          
         //   this.getEmployees();
-        // }
+        // }   
     this.addEmployees= this.fb.group({
       id: ['', [Validators.minLength(6),Validators.required]],
       employee_name: ['', [Validators.minLength(6),Validators.required]],
@@ -51,12 +48,17 @@ export class AddUsersComponent implements OnInit {
     //   this.isEditMode = true;
     //   this.missionID = this.route.snapshot.queryParams['_id'];
     //   this.getEmployees();
+    this.userId = this.route.snapshot.paramMap.get('id');
+        console.log(this.userId);
+          
+      this.getEmployees();
     
   
   }  
   getEmployees() {
-    this.auth.getRequest('get', this.userId).subscribe((res: any) => {
-      this.addEmployees.patchValue(res.data);
+
+    this.auth.getRequestWithID('get/', this.userId).subscribe((res: any) => {
+      this.addEmployees.patchValue(res.allEmployees);
       if (this.type == 'view') {
         this.addEmployees.disable();
       }

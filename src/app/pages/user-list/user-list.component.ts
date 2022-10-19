@@ -45,10 +45,12 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
-    this.missionDetails = this.route.snapshot.paramMap.get('type');
-    if (this.missionDetails == 'edit') {
-      this.userId = this.route.snapshot.paramMap.get('_id');
-    }
+    // this.missionDetails = this.route.snapshot.paramMap.get('type');
+    // if (this.missionDetails == 'edit') {
+    //   this.userId = this.route.snapshot.paramMap.get('id');
+    //   console.log(this.userId);
+      
+    // }
     
   //   this.dataSource.filterPredicate = function(data, filter: string): boolean {
   //     return data.id.toLowerCase().includes(filter) || data.employee_name.toString().includes(filter) || data.employee_age.toString().includes(filter);
