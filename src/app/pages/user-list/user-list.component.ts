@@ -87,8 +87,9 @@ applyFilter(event: Event) {
 
     // });
     this.auth.getRequest('getAll', query).subscribe((res: any) => {
-        this.dataSource = res.allEmployees;
-        this.recordsLength = res.count;
+
+        this.dataSource = res.allEmployees.slice(0, 5);
+        this.recordsLength = res.count || 5;
   
       });
   }
@@ -102,7 +103,6 @@ applyFilter(event: Event) {
   //   this.pageIndex=0;
   //   this.getUsers();
   // }
-
 
   removeItem(_id: string) {
     Swal.fire({

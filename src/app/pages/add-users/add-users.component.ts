@@ -17,21 +17,16 @@ export class AddUsersComponent implements OnInit {
   submitted: boolean= false;
   
   addEmployees: FormGroup;
-  isEditMode: boolean= false;
   missionID: any;
   type: any;
   userId: any;
 
   constructor( private route: ActivatedRoute, private fb: FormBuilder, private auth: AuthService, 
     private router: Router) {   
-      
-        // this.type = this.route.snapshot.paramMap.get('type');
-        // if (this.type == 'edit') {
-        //   this.userId = this.route.snapshot.paramMap.get('id');
-        //   console.log(this.userId);
-          
-        //   this.getEmployees();
-        // }   
+      this.userId = this.route.snapshot.paramMap.get('id');
+      console.log(this.userId);
+        
+    this.getEmployees();
     this.addEmployees= this.fb.group({
       id: ['', [Validators.minLength(6),Validators.required]],
       employee_name: ['', [Validators.minLength(6),Validators.required]],
@@ -48,65 +43,38 @@ export class AddUsersComponent implements OnInit {
     //   this.isEditMode = true;
     //   this.missionID = this.route.snapshot.queryParams['_id'];
     //   this.getEmployees();
-    this.userId = this.route.snapshot.paramMap.get('id');
-        console.log(this.userId);
-          
-      this.getEmployees();
+    
     
   
   }  
   getEmployees() {
 
     this.auth.getRequestWithID('get/', this.userId).subscribe((res: any) => {
-      this.addEmployees.patchValue(res.allEmployees);
-      if (this.type == 'view') {
+      this.addEmployees.patchValue(res.data);
+      if (this.type == "view") {
         this.addEmployees.disable();
       }
     });
   }
 
+    onSubmit(){
   
-
-  
-
-  // getEmployees() {
-  //   this.auth.getRequestWithID('get/', this.missionID).subscribe((res: any) => {
-     
-  //       this.addEmployees.patchValue(res.data);
-  //       // this.dataSource = res.data.permission;
+      (this.type =='add'
+        ?this.auth.postRequestwithoutToken("create",this.addEmployees.value)
+    
+        :this.auth.putWithID(`update`,this.userId,this.addEmployees.value)
+      ).subscribe((result)=>{ 
+        console.log(result);
+        this.router.navigateByUrl('/list')
+      })
       
-  //   });
-  // }
-
-    onSubmit() {
-      // this.submitted = true;
-      if (this.addEmployees.valid) {
-        if (this.type== "Edit") {
-          delete this.addEmployees.value.name;
-          this.auth
-            .putWithID(
-              'update',
-              this.missionID, 
-              this.addEmployees.value
-              )
-            .subscribe((res: any) => {
-                this.router.navigateByUrl('/edit'),
-                this.addEmployees.patchValue(res.allEmployees)  
-              }
-            );
-        } else {
-          this.auth
-            .postRequestwithoutToken('create', this.addEmployees.value)
-            .subscribe((res: any) => {
-              // if (res.statusCode === 200) {
-                this.router.navigateByUrl('/list')
-                // history.back();
-              }
-            );
-        } 
-      } 
+      if( this.addEmployees.valid){
+        this.addEmployees.enabled
       }
-
+      else{
+        this.addEmployees.markAllAsTouched()
+      }
+    }
    
 }
     

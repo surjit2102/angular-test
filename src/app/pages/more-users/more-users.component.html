@@ -1,10 +1,9 @@
 <p>more-users works!</p>
 
-<div id="page-content-wrapper">
+<!-- <div id="page-content-wrapper">
   <div class="container-fluid">
     <div class="dashboard-page">
       <div class="title-bar">
-        <!-- <h2>{{ type? "Edit":"Add" }} Employees</h2> -->
         <h2>More Users only in Console</h2>
       </div>
       <div style="text-align: right">
@@ -114,4 +113,28 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+
+<p>  
+  More Users in Console 
+</p>  
+
+<button (click)="addItem()">Add</button>  
+<form [formGroup]="moreEmployees"  (ngSubmit)="onSubmit()">
+<div formArrayName="items"  >
+ <div *ngFor="let item of items.controls; let i = index;">  
+  <div [formGroupName]="i">  
+    <input formControlName="id" placeholder="ID">  
+    <input formControlName="employee_name" placeholder="Name of Employee">  
+    <input formControlName="employee_age" placeholder="Age of Employee"> 
+    <input formControlName="employee_salary" placeholder="Salary of Employee">  
+    <button (click)="removeSkill(i)">Remove</button>
+ 
+  </div>  
+</div>  
+</div>  
+
+<button type="submit" class="btn-btn primary">Submit</button>
+</form>
+
